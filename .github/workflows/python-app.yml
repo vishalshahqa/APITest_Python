@@ -22,16 +22,23 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: "3.10"
-    
-    
-    
-before_script:
-    - pip install -r requirements.txt
-    - pip install -e .
-    - pip show myapp    
 
-run tests:
+jobs:
+  Test:
+
+- name: Create virtual environment
+      run: |
+        python3 -m venv vEnv_APITest
+
+- name: Activate virtual environment
+      run: |
+        vEnv_APITest/scripts/activate.bat        
+ 
+ - name: Install dependencies
+  run: |
+    python -m pip install --upgrade pip
+    pip install -r apiTest_Requirements.txt   
     
-    script:
-        - cd /workspace
-        - python -m pytest
+ - name: Test with pytest
+      run: |
+        pytest
