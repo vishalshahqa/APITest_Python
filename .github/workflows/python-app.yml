@@ -25,21 +25,17 @@ jobs:
     
     
     
-    - name: Create virtual environment
-      run: |
-        python3 -m venv vEnv_APITest
-    
-    - name: Activate virtual environment
-      run: |
-        vEnv_APITest/scripts/activate.bat
-    
-    
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r apiTest_Requirements.txt
+    before_script:
+    - pip install -r requirements.txt
+    - pip install -e .
+    - pip show myapp
 
-    
-    - name: Test with pytest
-      run: |
-        pytest
+    run tests:
+    only:
+        - master
+    tags:
+        - python3
+        - tests
+    script:
+        - cd /workspace
+        - python -m pytest
